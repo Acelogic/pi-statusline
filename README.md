@@ -47,6 +47,7 @@ Environment variables (all optional):
 - `PI_STATUSLINE_BASELINE_TOKENS` — baseline tokens used for the bar before the first turn completes (default `20000`)
 - `PI_STATUSLINE_GIT_CACHE_MS` — how long git status is cached before re-running (default `1500`; set to `0` to disable caching)
 - `PI_STATUSLINE_SHOW_GIT` — set to `false`/`0`/`off` to hide the git section entirely
+- `PI_STATUSLINE_PCT_DECIMALS` — decimal places on the context percentage (default `1`, set to `0` for integer-only like `35%`, max `4`)
 
 ## Notes
 

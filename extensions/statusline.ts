@@ -105,7 +105,7 @@ function buildContextBar(
 	estimated: boolean,
 ): string {
 	const safeWindow = Math.max(contextWindow, 1);
-	let pct = Math.floor((tokens * 100) / safeWindow);
+	let pct = (tokens * 100) / safeWindow;
 	if (pct < 0) pct = 0;
 	if (pct > 100) pct = 100;
 
@@ -117,9 +117,11 @@ function buildContextBar(
 		else if (progress >= 3) bar += `${accent}▄${RESET}`;
 		else bar += `${BAR_EMPTY}░${RESET}`;
 	}
+	const decimals = envInt("PI_STATUSLINE_PCT_DECIMALS", 1);
+	const pctStr = pct.toFixed(Math.min(4, decimals));
 	const maxK = Math.max(1, Math.round(safeWindow / 1000));
 	const prefix = estimated ? "~" : "";
-	return `${bar} ${GRAY}${prefix}${pct}% of ${maxK}k tokens${RESET}`;
+	return `${bar} ${GRAY}${prefix}${pctStr}% of ${maxK}k tokens${RESET}`;
 }
 
 function render(ctx: ExtensionContext): void {
