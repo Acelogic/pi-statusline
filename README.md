@@ -5,17 +5,25 @@ A [pi](https://github.com/mariozechner/pi-coding-agent) extension that renders a
 ## Display
 
 ```
-qwen3.6-35b-a3b | 📁my-project | 🔀main (2 files uncommitted, synced 4m ago) | ██████▄░░░ 63% of 128k tokens
+🦙 qwen3.6-35b-a3b | 💭high | 📁my-project | 🔀main (2 files uncommitted, synced) | t#14 · 42m | ⏱ 8s | ██████▄░░░ 63.2% of 128k tokens
+↳ can you refactor the middleware to use async handlers and add tests
 ```
 
-Four sections separated by `|`:
+Line 1 sections (separated by `|`):
 
-1. **Model** — accent-colored; reads `ctx.model.id`
-2. **Directory** — `📁<basename>` of `ctx.cwd`
-3. **Git** — `🔀<branch> (N files uncommitted, <sync-status>)`, skipped when not in a repo
-4. **Context bar** — 10-block usage bar plus `N% of Kk tokens`; uses pi's `getContextUsage()` when a turn has completed, otherwise a 20k-token baseline estimate with `~` prefix
+1. **Provider glyph + model** — accent-colored; provider → emoji (`🦙` LM Studio/Ollama, `🤖` Anthropic, `⚫` OpenAI, `⚡` Groq, `✨` Gemini, `🧬` Qwen, `🧠` fallback)
+2. **Thinking level** — `💭high|medium|low|xhigh`, hidden when `off`
+3. **Directory** — `📁<basename>` of `ctx.cwd`
+4. **Git** — `🔀<branch> (N files uncommitted, <sync-status>)`, skipped when not in a repo
+5. **Turn counter + session time** — `t#<completed-turns> · <elapsed>`
+6. **Live turn/tool indicator** — while a model turn is running: `⏱ <elapsed>` (updated every second). When a tool is executing: `🔧<toolName>`. Hidden when idle.
+7. **Context bar** — 10-block usage bar plus `N.N% of Kk tokens`. Color shifts to **orange** at >80% and **red** at >95%. Uses pi's `getContextUsage()` when a turn has completed, otherwise a 20k-token baseline estimate with `~` prefix.
 
-The statusline refreshes on `session_start`, `model_select`, `turn_end`, and `message_end`.
+Line 2 (only when placement is `belowEditor` or `aboveEditor`):
+
+- **Last user message** — `↳ <text>` preview, whitespace-collapsed, truncated to terminal width. Hidden when there's no user message yet.
+
+The statusline refreshes on `session_start`, `agent_start`, `agent_end`, `turn_end`, `tool_execution_start`, `tool_execution_end`, `model_select`, and `message_end`. While a turn is active a 1s ticker redraws to keep the `⏱` timer live.
 
 ## Install
 
@@ -52,6 +60,10 @@ Environment variables (all optional):
 - `PI_STATUSLINE_GIT_CACHE_MS` — how long git status is cached before re-running (default `1500`; set to `0` to disable caching)
 - `PI_STATUSLINE_SHOW_GIT` — set to `false`/`0`/`off` to hide the git section entirely
 - `PI_STATUSLINE_PCT_DECIMALS` — decimal places on the context percentage (default `1`, set to `0` for integer-only like `35%`, max `4`)
+- `PI_STATUSLINE_WARN_PCT` — context percentage at which the bar turns orange (default `80`)
+- `PI_STATUSLINE_DANGER_PCT` — context percentage at which the bar turns red (default `95`)
+- `PI_STATUSLINE_TICK_MS` — live-timer refresh interval in ms while a turn runs (default `1000`, min `250`)
+- `PI_STATUSLINE_SHOW_LAST_MSG` — set to `false`/`0`/`off` to hide the second (last-user-message) line
 
 ## Notes
 

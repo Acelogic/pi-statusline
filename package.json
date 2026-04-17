@@ -1,6 +1,6 @@
 {
   "name": "pi-statusline",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pi extension that replicates a Claude Code-style statusline: model, cwd, git branch + status, context bar.",
   "repository": {
     "type": "git",
