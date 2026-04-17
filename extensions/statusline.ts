@@ -124,6 +124,15 @@ function buildContextBar(
 	return `${bar} ${GRAY}${prefix}${pctStr}% of ${maxK}k tokens${RESET}`;
 }
 
+type Placement = "aboveEditor" | "belowEditor" | "footer";
+
+function getPlacement(): Placement {
+	const raw = process.env.PI_STATUSLINE_PLACEMENT?.trim().toLowerCase();
+	if (raw === "above" || raw === "aboveeditor") return "aboveEditor";
+	if (raw === "footer" || raw === "status") return "footer";
+	return "belowEditor";
+}
+
 function render(ctx: ExtensionContext): void {
 	const accent = getAccent();
 	const modelLabel = ctx.model?.id ?? "no model";
@@ -143,7 +152,14 @@ function render(ctx: ExtensionContext): void {
 	}
 	out += `${GRAY} | ${ctxStr}`;
 
-	ctx.ui.setStatus(STATUS_ID, out);
+	const placement = getPlacement();
+	if (placement === "footer") {
+		ctx.ui.setWidget(STATUS_ID, undefined);
+		ctx.ui.setStatus(STATUS_ID, out);
+	} else {
+		ctx.ui.setStatus(STATUS_ID, "");
+		ctx.ui.setWidget(STATUS_ID, [out], { placement });
+	}
 }
 
 export default function statuslineExtension(pi: ExtensionAPI) {

@@ -43,6 +43,10 @@ Then `/reload` inside pi.
 
 Environment variables (all optional):
 
+- `PI_STATUSLINE_PLACEMENT` — where the statusline renders. One of:
+  - `belowEditor` (default) — own line right under pi's input box
+  - `aboveEditor` — own line above chat
+  - `footer` — legacy behavior, crammed onto pi's shared extension-status row alongside `Claude Memories`, `LM Studio Active`, etc.
 - `PI_STATUSLINE_COLOR` — accent color, one of: `gray`, `orange`, `blue` (default), `teal`, `green`, `lavender`, `rose`, `gold`, `slate`, `cyan`
 - `PI_STATUSLINE_BASELINE_TOKENS` — baseline tokens used for the bar before the first turn completes (default `20000`)
 - `PI_STATUSLINE_GIT_CACHE_MS` — how long git status is cached before re-running (default `1500`; set to `0` to disable caching)
