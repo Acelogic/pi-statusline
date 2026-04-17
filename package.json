@@ -1,0 +1,29 @@
+{
+  "name": "pi-statusline",
+  "version": "0.1.0",
+  "description": "Pi extension that replicates a Claude Code-style statusline: model, cwd, git branch + status, context bar.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Acelogic/pi-statusline.git"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "statusline",
+    "footer",
+    "extension"
+  ],
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ]
+  },
+  "devDependencies": {
+    "@mariozechner/pi-coding-agent": "^0.67.67",
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}
